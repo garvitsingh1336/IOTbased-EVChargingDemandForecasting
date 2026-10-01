@@ -3,92 +3,102 @@
   "read_only_role_verified": true,
   "panels": [
     {
-      "title": "Historical arrivals \u00b7 usable hours",
+      "title": "\ud83d\udcc8 Historical Sessions",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Observed station names",
+      "title": "\ud83d\udd0c Station Names",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Expected arrivals \u00b7 next 24 hours",
+      "title": "\ud83d\udd2e Next 24h Expected",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Busiest forecast hour \u00b7 local",
+      "title": "\u23f0 Peak Forecast Hour",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Forecast context \u00b7 historical cutoff",
+      "title": "Forecast Context",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Next 24 hours \u00b7 expected session arrivals",
+      "title": "Next 24 Hours \u00b7 Expected Arrivals",
       "query_ok": true,
       "rows": 24
     },
     {
-      "title": "Actual vs predicted \u00b7 matching forecast run",
+      "title": "Actual vs Predicted",
       "query_ok": true,
       "rows": 24
     },
     {
-      "title": "Historical hourly arrivals \u00b7 selected time range",
+      "title": "Historical Hourly Arrivals",
       "query_ok": true,
       "rows": 721
     },
     {
-      "title": "Typical day \u00b7 mean arrivals by hour",
+      "title": "Typical Day \u00b7 Mean by Hour",
       "query_ok": true,
       "rows": 24
     },
     {
-      "title": "Typical week \u00b7 mean arrivals by weekday",
+      "title": "Typical Week \u00b7 Mean by Weekday",
       "query_ok": true,
       "rows": 7
     },
     {
-      "title": "Weekday / hour heatmap \u00b7 mean sessions/hour",
+      "title": "Avg Sessions/Hour",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Weekday \u00d7 Hour Heatmap \u00b7 Mean Sessions/Hour",
       "query_ok": true,
       "rows": 7
     },
     {
-      "title": "Held-out test \u00b7 MAE and RMSE",
+      "title": "Test Set \u00b7 MAE & RMSE Comparison",
       "query_ok": true,
       "rows": 4
     },
     {
-      "title": "Validation/test metrics \u00b7 sessions/hour",
+      "title": "Full Metrics Table",
       "query_ok": true,
       "rows": 8
     },
     {
-      "title": "Evaluation protocol \u00b7 identical 24-hour forecast origins",
+      "title": "Evaluation Protocol",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Dataset coverage and quality",
+      "title": "Dataset Coverage",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Quality warnings \u00b7 interpretation matters",
+      "title": "Quality Warnings",
       "query_ok": true,
       "rows": 7
     },
     {
-      "title": "Historical data replay \u2014 simulated IoT feed",
+      "title": "Replay Run Summary",
       "query_ok": true,
       "rows": 1
     },
     {
-      "title": "Incoming replay events \u00b7 arrival fields only",
+      "title": "Replay Statistics",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Latest Replay Events",
       "query_ok": true,
       "rows": 10
     }

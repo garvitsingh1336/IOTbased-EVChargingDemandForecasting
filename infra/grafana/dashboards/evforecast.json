@@ -1,22 +1,31 @@
 {
   "uid": "evforecast-demand",
-  "title": "EV Charging | Demand Intelligence",
-  "description": "Historical Boulder session-arrival forecasting and simulated IoT ingestion.",
+  "title": "⚡ EV Charging | Demand Intelligence",
+  "description": "IoT-Based EV Charging Demand Forecasting — Boulder historical session-arrival forecasting with XGBoost and simulated IoT ingestion.",
   "tags": [
     "EV charging",
+    "IoT",
+    "XGBoost",
     "Boulder",
-    "historical replay"
+    "forecasting"
   ],
   "schemaVersion": 41,
-  "version": 2,
+  "version": 3,
   "editable": false,
   "timezone": "America/Denver",
   "refresh": "30s",
   "time": {
-    "from": "2023-10-31T06:00:00+00:00",
-    "to": "2023-11-30T07:00:00+00:00"
+    "from": "2022-12-01T00:00:00Z",
+    "to": "2023-12-01T00:00:00Z"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m"
+    ]
+  },
   "templating": {
     "list": [
       {
@@ -37,7 +46,7 @@
       },
       {
         "name": "forecast",
-        "label": "Historical forecast run",
+        "label": "Forecast Run",
         "type": "query",
         "datasource": {
           "type": "postgres",
@@ -53,7 +62,7 @@
       },
       {
         "name": "replay",
-        "label": "Replay run",
+        "label": "Replay Run",
         "type": "query",
         "datasource": {
           "type": "postgres",
@@ -79,45 +88,49 @@
         "x": 0,
         "y": 0,
         "w": 24,
-        "h": 4
+        "h": 5
       },
+      "transparent": true,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
       "options": {
         "mode": "markdown",
-        "content": "# ⚡ EV CHARGING · DEMAND INTELLIGENCE\n**Boulder — Scott Carpenter Park** &nbsp; / &nbsp; America/Denver &nbsp; / &nbsp; XGBoost\n\nHistorical study · 2022-12-01 → 2023-12-01 (end exclusive). Forecasts estimate **session arrivals per hour**, not electrical load. Use the selectors to inspect a saved forecast and a simulated replay."
+        "content": "<div style=\"text-align:center; padding: 12px 0;\">\n\n# ⚡ EV CHARGING DEMAND INTELLIGENCE\n\n**Boulder — Scott Carpenter Park** &nbsp; · &nbsp; `America/Denver` &nbsp; · &nbsp; XGBoost Recursive Forecasting\n\n---\n\n📅 Historical study period: **2022-12-01** → **2023-12-01** (exclusive) &nbsp; | &nbsp; 📊 Metric: **Sessions / hour** &nbsp; | &nbsp; 🔋 Not electrical load\n\n</div>"
       }
     },
     {
       "id": 2,
-      "title": "Historical arrivals · usable hours",
+      "title": "📈 Historical Sessions",
       "type": "stat",
-      "description": "",
+      "description": "Total observed session arrivals across all usable hours in the selected dataset.",
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 5,
         "w": 6,
         "h": 4
       },
+      "transparent": true,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -155,24 +168,26 @@
     },
     {
       "id": 3,
-      "title": "Observed station names",
+      "title": "🔌 Station Names",
       "type": "stat",
-      "description": "Distinct station names, not individual connectors or available capacity.",
+      "description": "Distinct station names reported in source data. Does not equal individual connector/port count.",
       "gridPos": {
         "x": 6,
-        "y": 4,
+        "y": 5,
         "w": 6,
         "h": 4
       },
+      "transparent": true,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#73BF69"
+            "fixedColor": "#4FC3F7"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -210,24 +225,26 @@
     },
     {
       "id": 4,
-      "title": "Expected arrivals · next 24 hours",
+      "title": "🔮 Next 24h Expected",
       "type": "stat",
-      "description": "",
+      "description": "Sum of predicted session arrivals over the next 24 forecast hours.",
       "gridPos": {
         "x": 12,
-        "y": 4,
+        "y": 5,
         "w": 6,
         "h": 4
       },
+      "transparent": true,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#FF9830"
+            "fixedColor": "#F5A623"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -259,30 +276,32 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT sum(prediction) AS \"Expected sessions\" FROM forecast_points WHERE forecast_id = ${forecast:sqlstring}"
+          "rawSql": "SELECT sum(prediction) AS \"Expected\" FROM forecast_points WHERE forecast_id = ${forecast:sqlstring}"
         }
       ]
     },
     {
       "id": 5,
-      "title": "Busiest forecast hour · local",
+      "title": "⏰ Peak Forecast Hour",
       "type": "stat",
-      "description": "",
+      "description": "Local hour with the highest predicted session arrivals in the selected forecast run.",
       "gridPos": {
         "x": 18,
-        "y": 4,
+        "y": 5,
         "w": 6,
         "h": 4
       },
+      "transparent": true,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#FF9830"
+            "fixedColor": "#FF6B6B"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -314,30 +333,32 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT to_char(timestamp AT TIME ZONE 'America/Denver','Dy HH24:MI') AS \"Peak hour\" FROM forecast_points WHERE forecast_id = ${forecast:sqlstring} ORDER BY prediction DESC,timestamp LIMIT 1"
+          "rawSql": "SELECT to_char(timestamp AT TIME ZONE 'America/Denver','Dy HH24:MI') AS \"Peak\" FROM forecast_points WHERE forecast_id = ${forecast:sqlstring} ORDER BY prediction DESC,timestamp LIMIT 1"
         }
       ]
     },
     {
       "id": 6,
-      "title": "01  /  FORECAST EXPLORER",
+      "title": "⚡  FORECAST EXPLORER",
       "type": "row",
       "description": "",
       "gridPos": {
         "x": 0,
-        "y": 8,
+        "y": 9,
         "w": 24,
         "h": 1
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -347,24 +368,26 @@
     },
     {
       "id": 7,
-      "title": "Forecast context · historical cutoff",
+      "title": "Forecast Context",
       "type": "table",
-      "description": "",
+      "description": "Metadata for the selected forecast run including origin timestamp, training cutoff, and model version.",
       "gridPos": {
         "x": 0,
-        "y": 9,
+        "y": 10,
         "w": 24,
         "h": 4
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -373,7 +396,8 @@
         "cellHeight": "sm",
         "footer": {
           "show": false
-        }
+        },
+        "sortBy": []
       },
       "datasource": {
         "type": "postgres",
@@ -389,38 +413,41 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT to_char(origin AT TIME ZONE site_timezone,'YYYY-MM-DD HH24:MI') AS \"Forecast origin\", to_char(last_observation AT TIME ZONE site_timezone,'YYYY-MM-DD HH24:MI') AS \"Last observed hour start\", to_char(training_cutoff AT TIME ZONE site_timezone,'YYYY-MM-DD HH24:MI') AS \"Training cutoff (exclusive)\", site_timezone AS \"Timezone\", model_name AS \"Model\", model_version AS \"Version\", units AS \"Units\" FROM forecast_runs WHERE forecast_id = ${forecast:sqlstring}"
+          "rawSql": "SELECT to_char(origin AT TIME ZONE site_timezone,'YYYY-MM-DD HH24:MI') AS \"Forecast Origin\", to_char(last_observation AT TIME ZONE site_timezone,'YYYY-MM-DD HH24:MI') AS \"Last Observed Hour\", to_char(training_cutoff AT TIME ZONE site_timezone,'YYYY-MM-DD HH24:MI') AS \"Training Cutoff\", site_timezone AS \"Timezone\", model_name AS \"Model\", model_version AS \"Version\", units AS \"Units\" FROM forecast_runs WHERE forecast_id = ${forecast:sqlstring}"
         }
       ]
     },
     {
       "id": 8,
-      "title": "Next 24 hours · expected session arrivals",
+      "title": "Next 24 Hours · Expected Arrivals",
       "type": "barchart",
-      "description": "24 consecutive elapsed hours. Fractional predictions are expected counts; no calibrated uncertainty interval is claimed.",
+      "description": "24 consecutive elapsed hours of predicted session arrivals. Fractional values are expected counts; no calibrated uncertainty interval is claimed.",
       "gridPos": {
         "x": 0,
-        "y": 13,
+        "y": 14,
         "w": 12,
-        "h": 9
+        "h": 10
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#FF9830"
+            "fixedColor": "#F5A623"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
       "options": {
         "orientation": "vertical",
         "showValue": "never",
-        "groupWidth": 0.75,
-        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "barWidth": 0.85,
+        "barRadius": 0.15,
         "xTickLabelRotation": -45,
         "xTickLabelSpacing": 0,
         "legend": {
@@ -453,24 +480,26 @@
     },
     {
       "id": 9,
-      "title": "Actual vs predicted · matching forecast run",
+      "title": "Actual vs Predicted",
       "type": "barchart",
-      "description": "",
+      "description": "Side-by-side comparison of actual observed arrivals vs model predictions for the same 24-hour window.",
       "gridPos": {
         "x": 12,
-        "y": 13,
+        "y": 14,
         "w": 12,
-        "h": 9
+        "h": 10
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": [
           {
@@ -483,7 +512,7 @@
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "#5794F2"
+                  "fixedColor": "#6C63FF"
                 }
               }
             ]
@@ -498,7 +527,7 @@
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "#FF9830"
+                  "fixedColor": "#FF6B6B"
                 }
               }
             ]
@@ -508,8 +537,9 @@
       "options": {
         "orientation": "vertical",
         "showValue": "never",
-        "groupWidth": 0.75,
-        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "barWidth": 0.85,
+        "barRadius": 0.15,
         "xTickLabelRotation": -45,
         "xTickLabelSpacing": 0,
         "legend": {
@@ -542,24 +572,26 @@
     },
     {
       "id": 10,
-      "title": "02  /  HISTORICAL PATTERNS",
+      "title": "📊  HISTORICAL PATTERNS",
       "type": "row",
       "description": "",
       "gridPos": {
         "x": 0,
-        "y": 22,
+        "y": 24,
         "w": 24,
         "h": 1
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -569,32 +601,38 @@
     },
     {
       "id": 11,
-      "title": "Historical hourly arrivals · selected time range",
+      "title": "Historical Hourly Arrivals",
       "type": "timeseries",
-      "description": "",
+      "description": "Interactive time series of hourly session arrivals. Use the time range picker to zoom into specific periods.",
       "gridPos": {
         "x": 0,
-        "y": 23,
+        "y": 25,
         "w": 24,
-        "h": 8
+        "h": 9
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
           "min": 0,
+          "noValue": "—",
           "custom": {
             "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "fillOpacity": 15,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "gradientMode": "opacity",
             "showPoints": "never",
             "spanNulls": false,
-            "axisLabel": "sessions/hour"
+            "axisLabel": "sessions/hour",
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           }
         },
         "overrides": []
@@ -605,11 +643,13 @@
           "placement": "bottom",
           "calcs": [
             "mean",
-            "max"
+            "max",
+            "sum"
           ]
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "desc"
         }
       },
       "datasource": {
@@ -626,38 +666,41 @@
           "editorMode": "code",
           "format": "time_series",
           "rawQuery": true,
-          "rawSql": "SELECT timestamp AS time, arrivals AS \"Actual arrivals\" FROM hourly_demand WHERE dataset_id = ${dataset:sqlstring} AND $__timeFilter(timestamp) ORDER BY timestamp"
+          "rawSql": "SELECT timestamp AS time, arrivals AS \"Session arrivals\" FROM hourly_demand WHERE dataset_id = ${dataset:sqlstring} AND $__timeFilter(timestamp) ORDER BY timestamp"
         }
       ]
     },
     {
       "id": 12,
-      "title": "Typical day · mean arrivals by hour",
+      "title": "Typical Day · Mean by Hour",
       "type": "barchart",
       "description": "",
       "gridPos": {
         "x": 0,
-        "y": 31,
-        "w": 12,
-        "h": 8
+        "y": 34,
+        "w": 8,
+        "h": 9
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
       "options": {
         "orientation": "vertical",
         "showValue": "never",
-        "groupWidth": 0.75,
-        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "barWidth": 0.85,
+        "barRadius": 0.15,
         "xTickLabelRotation": -45,
         "xTickLabelSpacing": 0,
         "legend": {
@@ -690,32 +733,35 @@
     },
     {
       "id": 13,
-      "title": "Typical week · mean arrivals by weekday",
+      "title": "Typical Week · Mean by Weekday",
       "type": "barchart",
       "description": "",
       "gridPos": {
-        "x": 12,
-        "y": 31,
-        "w": 12,
-        "h": 8
+        "x": 8,
+        "y": 34,
+        "w": 8,
+        "h": 9
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#73BF69"
+            "fixedColor": "#2ECE71"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
       "options": {
         "orientation": "vertical",
         "showValue": "never",
-        "groupWidth": 0.75,
-        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "barWidth": 0.85,
+        "barRadius": 0.15,
         "xTickLabelRotation": -45,
         "xTickLabelSpacing": 0,
         "legend": {
@@ -748,15 +794,82 @@
     },
     {
       "id": 14,
-      "title": "Weekday / hour heatmap · mean sessions/hour",
-      "type": "table",
-      "description": "All usable history. Repeated DST hours contribute separate elapsed-hour observations. Empty cells indicate missing coverage.",
+      "title": "Avg Sessions/Hour",
+      "type": "gauge",
+      "description": "Overall average sessions per hour across all usable history.",
       "gridPos": {
-        "x": 0,
-        "y": 39,
-        "w": 24,
+        "x": 16,
+        "y": 34,
+        "w": 8,
         "h": 9
       },
+      "transparent": false,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#6C63FF"
+          },
+          "min": 0,
+          "noValue": "—",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#2ECE71",
+                "value": null
+              },
+              {
+                "color": "#F5A623",
+                "value": 1
+              },
+              {
+                "color": "#FF6B6B",
+                "value": 2
+              }
+            ]
+          },
+          "max": 4
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "datasource": {
+        "type": "postgres",
+        "uid": "evforecast-postgres"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "evforecast-postgres"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT avg(arrivals) AS \"Avg\" FROM hourly_demand WHERE dataset_id = ${dataset:sqlstring}"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Weekday × Hour Heatmap · Mean Sessions/Hour",
+      "type": "table",
+      "description": "Demand intensity by weekday and hour. Darker red = higher demand. Empty cells indicate missing coverage.",
+      "gridPos": {
+        "x": 0,
+        "y": 43,
+        "w": 24,
+        "h": 10
+      },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
@@ -765,6 +878,7 @@
             "mode": "continuous-BlYlRd"
           },
           "min": 0,
+          "noValue": "—",
           "custom": {
             "cellOptions": {
               "type": "color-background",
@@ -799,7 +913,8 @@
         "cellHeight": "sm",
         "footer": {
           "show": false
-        }
+        },
+        "sortBy": []
       },
       "datasource": {
         "type": "postgres",
@@ -820,25 +935,27 @@
       ]
     },
     {
-      "id": 15,
-      "title": "03  /  MODEL PERFORMANCE",
+      "id": 16,
+      "title": "🏆  MODEL PERFORMANCE",
       "type": "row",
       "description": "",
       "gridPos": {
         "x": 0,
-        "y": 48,
+        "y": 53,
         "w": 24,
         "h": 1
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -847,33 +964,67 @@
       "panels": []
     },
     {
-      "id": 16,
-      "title": "Held-out test · MAE and RMSE",
+      "id": 17,
+      "title": "Test Set · MAE & RMSE Comparison",
       "type": "barchart",
-      "description": "",
+      "description": "Lower is better. MAE = Mean Absolute Error; RMSE = Root Mean Squared Error. Both measured in sessions/hour on held-out test data.",
       "gridPos": {
         "x": 0,
-        "y": 49,
+        "y": 54,
         "w": 12,
-        "h": 8
+        "h": 9
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MAE"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#6C63FF"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RMSE"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF6B6B"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "orientation": "vertical",
         "showValue": "never",
-        "groupWidth": 0.75,
-        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "barWidth": 0.85,
+        "barRadius": 0.15,
         "xTickLabelRotation": -45,
         "xTickLabelSpacing": 0,
         "legend": {
@@ -905,25 +1056,27 @@
       ]
     },
     {
-      "id": 17,
-      "title": "Validation/test metrics · sessions/hour",
+      "id": 18,
+      "title": "Full Metrics Table",
       "type": "table",
-      "description": "",
+      "description": "Validation and test performance for all models. XGBoost was selected by validation MAE; test metrics are reported for comparison only.",
       "gridPos": {
         "x": 12,
-        "y": 49,
+        "y": 54,
         "w": 12,
-        "h": 8
+        "h": 9
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -932,7 +1085,8 @@
         "cellHeight": "sm",
         "footer": {
           "show": false
-        }
+        },
+        "sortBy": []
       },
       "datasource": {
         "type": "postgres",
@@ -948,105 +1102,32 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT split, model, round(mae::numeric,3) AS mae, round(rmse::numeric,3) AS rmse, origins, forecast_hours FROM evaluation_results WHERE model_version=(SELECT model_version FROM forecast_runs WHERE forecast_id = ${forecast:sqlstring}) ORDER BY split,mae"
-        }
-      ]
-    },
-    {
-      "id": 18,
-      "title": "Evaluation protocol · identical 24-hour forecast origins",
-      "type": "table",
-      "description": "",
-      "gridPos": {
-        "x": 0,
-        "y": 57,
-        "w": 24,
-        "h": 4
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "decimals": 2,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#5794F2"
-          },
-          "min": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "datasource": {
-        "type": "postgres",
-        "uid": "evforecast-postgres"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "postgres",
-            "uid": "evforecast-postgres"
-          },
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT DISTINCT details->>'selected_model' AS \"Validation winner\", to_char(period_start AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI') AS \"Test start\", to_char(period_end AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI') AS \"Test end exclusive\", origins AS \"Test origins\", forecast_hours AS \"Evaluated hours\" FROM evaluation_results WHERE split='test' AND model_version=(SELECT model_version FROM forecast_runs WHERE forecast_id = ${forecast:sqlstring})"
+          "rawSql": "SELECT split AS \"Split\", model AS \"Model\", round(mae::numeric,3) AS \"MAE\", round(rmse::numeric,3) AS \"RMSE\", origins AS \"Origins\", forecast_hours AS \"Hours\" FROM evaluation_results WHERE model_version=(SELECT model_version FROM forecast_runs WHERE forecast_id = ${forecast:sqlstring}) ORDER BY split,mae"
         }
       ]
     },
     {
       "id": 19,
-      "title": "04  /  DATA QUALITY & PROVENANCE",
-      "type": "row",
-      "description": "",
-      "gridPos": {
-        "x": 0,
-        "y": 61,
-        "w": 24,
-        "h": 1
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "decimals": 2,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#5794F2"
-          },
-          "min": 0
-        },
-        "overrides": []
-      },
-      "options": {},
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 20,
-      "title": "Dataset coverage and quality",
+      "title": "Evaluation Protocol",
       "type": "table",
-      "description": "",
+      "description": "Chronological rolling-origin evaluation protocol. Each origin produces a complete 24-hour recursive forecast.",
       "gridPos": {
         "x": 0,
-        "y": 62,
+        "y": 63,
         "w": 24,
-        "h": 5
+        "h": 4
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -1055,7 +1136,8 @@
         "cellHeight": "sm",
         "footer": {
           "show": false
-        }
+        },
+        "sortBy": []
       },
       "datasource": {
         "type": "postgres",
@@ -1071,78 +1153,32 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT quality->>'site_name' AS \"Location\", quality->>'first_connection_local' AS \"First selected arrival\", quality->>'last_connection_local' AS \"Last selected arrival\", (quality->>'local_days')::int AS \"Days\", (quality->>'assumed_zero_hours')::int AS \"Assumed-zero hours\", (quality->>'known_missing_hours')::int+(quality->>'unknown_coverage_hours')::int AS \"Masked hours\", quality->>'coverage_status' AS \"Source status\" FROM datasets WHERE dataset_id = ${dataset:sqlstring}"
+          "rawSql": "SELECT DISTINCT details->>'selected_model' AS \"Validation Winner\", to_char(period_start AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI') AS \"Test Start\", to_char(period_end AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI') AS \"Test End (exclusive)\", origins AS \"Test Origins\", forecast_hours AS \"Evaluated Hours\" FROM evaluation_results WHERE split='test' AND model_version=(SELECT model_version FROM forecast_runs WHERE forecast_id = ${forecast:sqlstring})"
         }
       ]
     },
     {
-      "id": 21,
-      "title": "Quality warnings · interpretation matters",
-      "type": "table",
+      "id": 20,
+      "title": "🔍  DATA QUALITY & PROVENANCE",
+      "type": "row",
       "description": "",
       "gridPos": {
         "x": 0,
         "y": 67,
         "w": 24,
-        "h": 8
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "decimals": 2,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#5794F2"
-          },
-          "min": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false
-        }
-      },
-      "datasource": {
-        "type": "postgres",
-        "uid": "evforecast-postgres"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "postgres",
-            "uid": "evforecast-postgres"
-          },
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT json_array_elements_text(quality->'warnings') AS \"Data-quality notes\" FROM datasets WHERE dataset_id = ${dataset:sqlstring}"
-        }
-      ]
-    },
-    {
-      "id": 22,
-      "title": "05  /  HISTORICAL DATA REPLAY — SIMULATED IOT FEED",
-      "type": "row",
-      "description": "",
-      "gridPos": {
-        "x": 0,
-        "y": 75,
-        "w": 24,
         "h": 1
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -1151,25 +1187,27 @@
       "panels": []
     },
     {
-      "id": 23,
-      "title": "Historical data replay — simulated IoT feed",
+      "id": 21,
+      "title": "Dataset Coverage",
       "type": "table",
-      "description": "",
+      "description": "Source dataset coverage summary. Assumed-zero hours have no observed arrivals but no confirmed feed outage either.",
       "gridPos": {
         "x": 0,
-        "y": 76,
+        "y": 68,
         "w": 24,
-        "h": 4
+        "h": 5
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -1178,7 +1216,8 @@
         "cellHeight": "sm",
         "footer": {
           "show": false
-        }
+        },
+        "sortBy": []
       },
       "datasource": {
         "type": "postgres",
@@ -1194,30 +1233,32 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT r.run_id AS \"Demo run\", r.generation AS \"Reset generation\", count(e.event_id) AS \"Unique arrivals ingested\", max(e.received_at) AS \"Last ingestion time\" FROM replay_runs r LEFT JOIN arrival_events e ON e.run_id=r.run_id WHERE r.run_id=${replay:sqlstring} GROUP BY r.run_id,r.generation"
+          "rawSql": "SELECT quality->>'site_name' AS \"Location\", quality->>'first_connection_local' AS \"First Arrival\", quality->>'last_connection_local' AS \"Last Arrival\", (quality->>'local_days')::int AS \"Days\", (quality->>'assumed_zero_hours')::int AS \"Assumed-Zero Hours\", (quality->>'known_missing_hours')::int+(quality->>'unknown_coverage_hours')::int AS \"Masked Hours\", quality->>'coverage_status' AS \"Source Status\" FROM datasets WHERE dataset_id = ${dataset:sqlstring}"
         }
       ]
     },
     {
-      "id": 24,
-      "title": "Incoming replay events · arrival fields only",
+      "id": 22,
+      "title": "Quality Warnings",
       "type": "table",
-      "description": "",
+      "description": "Operational caveats and data limitations that affect interpretation. Read these before drawing conclusions.",
       "gridPos": {
         "x": 0,
-        "y": 80,
+        "y": 73,
         "w": 24,
         "h": 8
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
@@ -1226,7 +1267,8 @@
         "cellHeight": "sm",
         "footer": {
           "show": false
-        }
+        },
+        "sortBy": []
       },
       "datasource": {
         "type": "postgres",
@@ -1242,45 +1284,243 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT event_id AS \"Event ID\", to_char(timestamp AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI:SS') AS \"Historical arrival (America/Denver)\", charger_id AS \"Source station\", received_at AS \"Ingested at\" FROM arrival_events WHERE run_id=${replay:sqlstring} ORDER BY received_at DESC LIMIT 20"
+          "rawSql": "SELECT json_array_elements_text(quality->'warnings') AS \"⚠️  Data Quality Notes\" FROM datasets WHERE dataset_id = ${dataset:sqlstring}"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "📡  SIMULATED IoT REPLAY",
+      "type": "row",
+      "description": "",
+      "gridPos": {
+        "x": 0,
+        "y": 81,
+        "w": 24,
+        "h": 1
+      },
+      "transparent": false,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#6C63FF"
+          },
+          "min": 0,
+          "noValue": "—"
+        },
+        "overrides": []
+      },
+      "options": {},
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 24,
+      "title": "Replay Run Summary",
+      "type": "table",
+      "description": "Summary of the selected replay run including reset generation and event count.",
+      "gridPos": {
+        "x": 0,
+        "y": 82,
+        "w": 12,
+        "h": 5
+      },
+      "transparent": false,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#6C63FF"
+          },
+          "min": 0,
+          "noValue": "—"
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "sortBy": []
+      },
+      "datasource": {
+        "type": "postgres",
+        "uid": "evforecast-postgres"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "evforecast-postgres"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT r.run_id AS \"Run ID\", r.generation AS \"Generation\", count(e.event_id) AS \"Events Ingested\", max(e.received_at) AS \"Last Ingestion\" FROM replay_runs r LEFT JOIN arrival_events e ON e.run_id=r.run_id WHERE r.run_id=${replay:sqlstring} GROUP BY r.run_id,r.generation"
         }
       ]
     },
     {
       "id": 25,
-      "title": "How to use this prototype",
-      "type": "text",
-      "description": "",
+      "title": "Replay Statistics",
+      "type": "table",
+      "description": "Timing statistics for the selected replay run.",
       "gridPos": {
-        "x": 0,
-        "y": 88,
-        "w": 24,
-        "h": 4
+        "x": 12,
+        "y": 82,
+        "w": 12,
+        "h": 5
       },
+      "transparent": false,
       "fieldConfig": {
         "defaults": {
           "unit": "short",
           "decimals": 2,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#5794F2"
+            "fixedColor": "#6C63FF"
           },
-          "min": 0
+          "min": 0,
+          "noValue": "—"
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "sortBy": []
+      },
+      "datasource": {
+        "type": "postgres",
+        "uid": "evforecast-postgres"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "evforecast-postgres"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(e.event_id) AS \"Total Events\", min(e.received_at) AS \"First Ingestion\", max(e.received_at) AS \"Latest Ingestion\", CASE WHEN count(e.event_id) > 1 THEN round(EXTRACT(EPOCH FROM max(e.received_at) - min(e.received_at))::numeric / GREATEST(count(e.event_id)-1, 1), 1) ELSE 0 END AS \"Avg Seconds Between Events\" FROM arrival_events e WHERE e.run_id=${replay:sqlstring}"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "title": "Latest Replay Events",
+      "type": "table",
+      "description": "Most recent 20 replay events with their historical arrival timestamps and ingestion times.",
+      "gridPos": {
+        "x": 0,
+        "y": 87,
+        "w": 24,
+        "h": 9
+      },
+      "transparent": false,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#6C63FF"
+          },
+          "min": 0,
+          "noValue": "—"
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        },
+        "sortBy": []
+      },
+      "datasource": {
+        "type": "postgres",
+        "uid": "evforecast-postgres"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "postgres",
+            "uid": "evforecast-postgres"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT event_id AS \"Event ID\", to_char(timestamp AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI:SS') AS \"Historical Arrival (America/Denver)\", charger_id AS \"Station / Charger\", to_char(received_at AT TIME ZONE 'America/Denver','YYYY-MM-DD HH24:MI:SS') AS \"Ingested At\" FROM arrival_events WHERE run_id=${replay:sqlstring} ORDER BY received_at DESC LIMIT 20"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "title": "How to Use This Prototype",
+      "type": "text",
+      "description": "",
+      "gridPos": {
+        "x": 0,
+        "y": 96,
+        "w": 24,
+        "h": 5
+      },
+      "transparent": true,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#6C63FF"
+          },
+          "min": 0,
+          "noValue": "—"
         },
         "overrides": []
       },
       "options": {
         "mode": "markdown",
-        "content": "**Replay controls:** use the Python CLI to start/resume; Ctrl+C pauses; `--reset` resets only the selected demo run. Replay events never increase the training counts.\n\n**Capacity planning:** arrival peaks can guide staffing studies and further measurement. They do not establish queue lengths, waiting times, charger shortages or electrical power requirements. This US dataset does not validate an Indian-campus deployment."
+        "content": "<div style=\"padding: 8px 0;\">\n\n### 🎮 Replay Controls\n```\npython -m evforecast simulate --api-url http://127.0.0.1:8000 --run-id demo --speed 3600 --reset\n```\n- **Ctrl+C** pauses replay; rerun resumes without duplicates\n- `--reset` resets only the selected run (does not delete training history or Docker volumes)\n- `--speed 100000000 --limit 10` for quick demo\n\n### ⚠️ Important Limitations\n- Arrival peaks guide capacity **studies**, not definitive capacity decisions\n- Cannot establish queue lengths, waiting times, charger shortages, or electrical power requirements\n- This is a **US municipal dataset** — results do not validate an Indian-campus deployment\n- Data ends November 2023 — these are **not live predictions**\n\n</div>"
       }
     }
   ],
   "links": [
     {
-      "title": "API & replay documentation",
+      "title": "📖 API Documentation",
       "url": "http://127.0.0.1:8000/docs",
       "type": "link",
-      "targetBlank": true
+      "targetBlank": true,
+      "icon": "doc"
+    },
+    {
+      "title": "💻 GitHub Repository",
+      "url": "https://github.com/garvitsingh1336/IOTbased-EVChargingDemandForecasting",
+      "type": "link",
+      "targetBlank": true,
+      "icon": "external link"
     }
-  ]
+  ],
+  "annotations": {
+    "list": []
+  },
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "liveNow": false
 }
