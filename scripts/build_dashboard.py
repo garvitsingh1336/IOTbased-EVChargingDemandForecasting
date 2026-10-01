@@ -341,8 +341,8 @@ def main():
         "timezone": tz,
         "refresh": "30s",
         "time": {
-            "from": config["period_start"] + "T00:00:00Z",
-            "to": config["period_end_exclusive"] + "T00:00:00Z",
+            "from": evaluation["test_start"],
+            "to": evaluation["test_end_exclusive"],
         },
         "timepicker": {"refresh_intervals": ["10s", "30s", "1m", "5m"]},
         "templating": {"list": variables},
