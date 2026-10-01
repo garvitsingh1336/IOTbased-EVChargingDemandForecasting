@@ -89,12 +89,12 @@ def main():
     # ═══════════════════════════════════════════════════════════════════
     panel("", "text", 0, 0, 24, 5, transparent=True, mode="markdown", content=(
         '<div style="text-align:center; padding: 12px 0;">\n\n'
-        '# ⚡ EV CHARGING DEMAND INTELLIGENCE\n\n'
+        '# ⚡ EV CHARGING DEMAND FORECASTING\n\n'
         f'**{config["site_name"]}** &nbsp; · &nbsp; `{tz}` &nbsp; · &nbsp; XGBoost Recursive Forecasting\n\n'
         '---\n\n'
         f'📅 Historical study period: **{config["period_start"]}** → **{config["period_end_exclusive"]}** (exclusive) &nbsp; | &nbsp; '
         '📊 Metric: **Sessions / hour** &nbsp; | &nbsp; '
-        '🔋 Not electrical load\n\n'
+        '🔋 Net electrical load\n\n'
         '</div>'))
 
     # ═══════════════════════════════════════════════════════════════════

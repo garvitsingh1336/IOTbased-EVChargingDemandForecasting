@@ -106,7 +106,7 @@
       },
       "options": {
         "mode": "markdown",
-        "content": "<div style=\"text-align:center; padding: 12px 0;\">\n\n# ⚡ EV CHARGING DEMAND INTELLIGENCE\n\n**Boulder — Scott Carpenter Park** &nbsp; · &nbsp; `America/Denver` &nbsp; · &nbsp; XGBoost Recursive Forecasting\n\n---\n\n📅 Historical study period: **2022-12-01** → **2023-12-01** (exclusive) &nbsp; | &nbsp; 📊 Metric: **Sessions / hour** &nbsp; | &nbsp; 🔋 Not electrical load\n\n</div>"
+        "content": "<div style=\"text-align:center; padding: 12px 0;\">\n\n# ⚡ EV CHARGING DEMAND FORECASTING\n\n**Boulder — Scott Carpenter Park** &nbsp; · &nbsp; `America/Denver` &nbsp; · &nbsp; XGBoost Recursive Forecasting\n\n---\n\n📅 Historical study period: **2022-12-01** → **2023-12-01** (exclusive) &nbsp; | &nbsp; 📊 Metric: **Sessions / hour** &nbsp; | &nbsp; 🔋 Net electrical load\n\n</div>"
       }
     },
     {
