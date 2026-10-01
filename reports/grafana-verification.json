@@ -1,0 +1,98 @@
+{
+  "grafana_url": "http://127.0.0.1:3000",
+  "read_only_role_verified": true,
+  "panels": [
+    {
+      "title": "Historical arrivals \u00b7 usable hours",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Observed station names",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Expected arrivals \u00b7 next 24 hours",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Busiest forecast hour \u00b7 local",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Forecast context \u00b7 historical cutoff",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Next 24 hours \u00b7 expected session arrivals",
+      "query_ok": true,
+      "rows": 24
+    },
+    {
+      "title": "Actual vs predicted \u00b7 matching forecast run",
+      "query_ok": true,
+      "rows": 24
+    },
+    {
+      "title": "Historical hourly arrivals \u00b7 selected time range",
+      "query_ok": true,
+      "rows": 721
+    },
+    {
+      "title": "Typical day \u00b7 mean arrivals by hour",
+      "query_ok": true,
+      "rows": 24
+    },
+    {
+      "title": "Typical week \u00b7 mean arrivals by weekday",
+      "query_ok": true,
+      "rows": 7
+    },
+    {
+      "title": "Weekday / hour heatmap \u00b7 mean sessions/hour",
+      "query_ok": true,
+      "rows": 7
+    },
+    {
+      "title": "Held-out test \u00b7 MAE and RMSE",
+      "query_ok": true,
+      "rows": 4
+    },
+    {
+      "title": "Validation/test metrics \u00b7 sessions/hour",
+      "query_ok": true,
+      "rows": 8
+    },
+    {
+      "title": "Evaluation protocol \u00b7 identical 24-hour forecast origins",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Dataset coverage and quality",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Quality warnings \u00b7 interpretation matters",
+      "query_ok": true,
+      "rows": 7
+    },
+    {
+      "title": "Historical data replay \u2014 simulated IoT feed",
+      "query_ok": true,
+      "rows": 1
+    },
+    {
+      "title": "Incoming replay events \u00b7 arrival fields only",
+      "query_ok": true,
+      "rows": 10
+    }
+  ],
+  "visual_browser_check": false,
+  "datasource_health": "OK"
+}

@@ -1,0 +1,42 @@
+name: evforecast
+services:
+  postgres:
+    image: postgres:16.10-alpine
+    environment:
+      POSTGRES_USER: ev_app
+      POSTGRES_DB: evforecast
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/setup_env.py first}
+      GRAFANA_READER_PASSWORD: ${GRAFANA_READER_PASSWORD:?Run scripts/setup_env.py first}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init-reader.sh:/docker-entrypoint-initdb.d/10-reader.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ev_app -d evforecast"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  grafana:
+    image: grafana/grafana:12.2.0
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?Run scripts/setup_env.py first}
+      GRAFANA_READER_PASSWORD: ${GRAFANA_READER_PASSWORD:?Run scripts/setup_env.py first}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_USERS_DEFAULT_THEME: dark
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/evforecast.json
+    ports:
+      - "127.0.0.1:${GRAFANA_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro
+volumes:
+  postgres_data:
+  grafana_data:

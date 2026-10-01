@@ -1,0 +1,14 @@
+{
+  "original_sha256_unchanged": true,
+  "identical_model_test_timestamps": true,
+  "test_hours_per_model": 336,
+  "nonnegative_predictions": true,
+  "pytest_exit_code": 0,
+  "cli_replay_unique_events": 10,
+  "cli_replay_restart_deduplicates": true,
+  "streamlit_health": "HTTP 200: ok",
+  "streamlit_home": "HTTP 200",
+  "dashboard_url": "http://127.0.0.1:8501",
+  "dashboard_pid": 14852,
+  "note": "Streamlit AppTest verifies rendering and controls; live HTTP verifies server startup. No visual browser inspection performed."
+}

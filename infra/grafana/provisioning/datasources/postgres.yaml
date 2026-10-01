@@ -1,0 +1,17 @@
+apiVersion: 1
+datasources:
+  - name: EV Forecasting PostgreSQL
+    uid: evforecast-postgres
+    type: postgres
+    access: proxy
+    url: postgres:5432
+    user: grafana_reader
+    isDefault: true
+    editable: false
+    jsonData:
+      database: evforecast
+      sslmode: disable
+      postgresVersion: 1600
+      timescaledb: false
+    secureJsonData:
+      password: $GRAFANA_READER_PASSWORD

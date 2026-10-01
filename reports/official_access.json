@@ -1,0 +1,13 @@
+{
+  "checked_at_utc": "2026-09-30T05:45:50.994331+00:00",
+  "source": "https://ev.caltech.edu/dataset.html",
+  "requested_site": "Caltech",
+  "requested_start": "2018-05-01",
+  "requested_end": "2018-11-01",
+  "api": "Official API requires a registered token; none supplied.",
+  "http_status": 200,
+  "content_type": "application/json",
+  "status": "public_web_download_unavailable",
+  "reason": "JSONDecodeError: Expecting value: line 59309 column 1 (char 2043641)",
+  "decision": "Continue with recoverable local historical data; no synthetic substitution."
+}

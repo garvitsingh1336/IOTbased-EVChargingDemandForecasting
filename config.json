@@ -1,0 +1,52 @@
+{
+  "source": "data/raw/boulder_sessions.json",
+  "dataset_type": "boulder",
+  "timezone": "America/Denver",
+  "site_id": "boulder-carpenter-park",
+  "site_name": "Boulder — Scott Carpenter Park",
+  "boulder_address": "1505 30th St",
+  "period_start": "2022-12-01",
+  "period_end_exclusive": "2023-12-01",
+  "site_selection": "Highest arrival count among addresses in Dec 2022-Sep 2023 only; no held-out October/November scores used.",
+  "silence_unknown_hours": 168,
+  "validation_days": 30,
+  "test_days": 30,
+  "minimum_training_days": 180,
+  "random_seed": 42,
+  "trees": 120,
+  "min_samples_leaf": [
+    2,
+    5,
+    10
+  ],
+  "known_missing_intervals": [],
+  "technology": "Embedded IOT",
+  "subdomain": "Charging Infrastructure",
+  "official_stack": ["REST API", "Python", "XGBoost", "Grafana"],
+  "primary_model": "xgboost",
+  "include_random_forest": true,
+  "rf_benchmark_leaf": 10,
+  "xgboost_grid": [
+    {
+      "n_estimators": 100,
+      "max_depth": 2,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "reg_lambda": 5
+    },
+    {
+      "n_estimators": 160,
+      "max_depth": 2,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "reg_lambda": 5
+    },
+    {
+      "n_estimators": 100,
+      "max_depth": 3,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "reg_lambda": 5
+    }
+  ]
+}

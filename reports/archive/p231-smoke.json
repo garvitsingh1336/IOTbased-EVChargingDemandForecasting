@@ -1,0 +1,30 @@
+{
+  "database_backend": "postgresql",
+  "bootstrap": {
+    "dataset_id": "b664e4e5a33f26c8dbc33d51e302ed15ff32019adb2ddf2b5d166439af068add",
+    "hourly_rows": 1704,
+    "forecast_id": "2ca18707-899a-4269-84c0-739f28824409",
+    "origin": "2018-06-22 07:00:00+00:00"
+  },
+  "live_health": {
+    "project_id": "P_231",
+    "ready": true,
+    "model_ready": true,
+    "database_ready": true,
+    "historical_data_ready": true,
+    "model_version": "xgb-594d4937e208d505a928",
+    "model_error": null
+  },
+  "ingested_unique_events": 3,
+  "repeated_event_rejected": true,
+  "simulator_resume_deduplicates": true,
+  "stored_forecast_hours": 24,
+  "stored_forecast_id": "dd8aa3eb-0545-4fc3-8407-26ca968864b7",
+  "model_version": "xgb-594d4937e208d505a928",
+  "origin": "2018-06-22T07:00:00+00:00",
+  "training_cutoff": "2018-06-22T07:00:00+00:00",
+  "actuals_per_run": 24,
+  "api_openapi_status": 200,
+  "original_source_unchanged": true,
+  "grafana": "Not exercised by this script. Run scripts/verify_grafana.py against PostgreSQL + Grafana."
+}

@@ -1,0 +1,24 @@
+{
+  "valid_json": true,
+  "recovery_needed": false,
+  "recovered_records": 148136,
+  "source": "C:\\Users\\seema\\OneDrive\\Desktop\\EVChargingForecasting\\data\\raw\\boulder_sessions.json",
+  "source_sha256": "9e51a08da5d0cb9f59d66bcfd84574bac3b109ee7c0e8fe530b70ef305aa9e8f",
+  "status": "Complete advertised Boulder table snapshot; underlying coverage unverified",
+  "download": {
+    "source_url": "https://services.arcgis.com/ePKBjXrBZ2vEEgWd/arcgis/rest/services/Electric_Vehicle_Charging_Station_Data/FeatureServer/0",
+    "retrieved_at": "2026-10-01T04:21:49.826335+00:00",
+    "records": 148136,
+    "object_id_field": "ObjectId2",
+    "source_editing_info": {
+      "lastEditDate": 1701895620243,
+      "schemaLastEditDate": 1701895620243,
+      "dataLastEditDate": 1701895620243
+    },
+    "sha256": "9e51a08da5d0cb9f59d66bcfd84574bac3b109ee7c0e8fe530b70ef305aa9e8f",
+    "bytes": 76456989,
+    "all_advertised_ids_downloaded": true,
+    "coverage_note": "Complete advertised table snapshot; not proof of uninterrupted charger reporting.",
+    "license": "CC0 per official item metadata"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "database_backend": "postgresql",
+  "bootstrap": {
+    "dataset_id": "cfee4739c7753d9ebef054db52133e4b7403ef551c1cefcc2f00a3655c9a822c",
+    "hourly_rows": 8712,
+    "forecast_id": "35366a96-80a5-4846-8f78-ffa5d278c60d",
+    "origin": "2023-10-31 06:00:00+00:00"
+  },
+  "live_health": {
+    "ready": true,
+    "model_ready": true,
+    "database_ready": true,
+    "historical_data_ready": true,
+    "model_version": "xgb-007fa5a4ccf4a14bec33",
+    "model_error": null
+  },
+  "ingested_unique_events": 3,
+  "repeated_event_rejected": true,
+  "simulator_resume_deduplicates": true,
+  "stored_forecast_hours": 24,
+  "stored_forecast_id": "b225a120-ef5c-4da9-a148-c86988011471",
+  "model_version": "xgb-007fa5a4ccf4a14bec33",
+  "origin": "2023-10-31T06:00:00+00:00",
+  "training_cutoff": "2023-10-31T06:00:00+00:00",
+  "actuals_per_run": 24,
+  "api_openapi_status": 200,
+  "original_source_unchanged": true,
+  "grafana": "Not exercised by this script. Run scripts/verify_grafana.py against PostgreSQL + Grafana."
+}
