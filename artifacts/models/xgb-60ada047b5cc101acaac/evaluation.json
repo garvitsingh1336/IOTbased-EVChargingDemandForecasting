@@ -1,0 +1,185 @@
+{
+  "technology": "Embedded IOT",
+  "subdomain": "Charging Infrastructure",
+  "official_stack": [
+    "REST API",
+    "Python",
+    "XGBoost",
+    "Grafana"
+  ],
+  "primary_model": "xgboost",
+  "evaluated_models": [
+    "same_hour_last_week",
+    "hour_of_week_average",
+    "xgboost",
+    "random_forest"
+  ],
+  "title": "IoT-Based EV Charging Demand Forecasting",
+  "target": "Site-wide session arrivals, sessions/hour",
+  "strategy": "Recursive next 24 elapsed hours; unavailable lags use predictions.",
+  "selected_model": "same_hour_last_week",
+  "selection": "Lowest validation MAE; RMSE then model name break ties.",
+  "validation_start": "2023-10-01T06:00:00+00:00",
+  "test_start": "2023-10-31T06:00:00+00:00",
+  "test_end_exclusive": "2023-11-30T07:00:00+00:00",
+  "training_start": "2022-12-02T07:00:00+00:00",
+  "validation_origins": 30,
+  "validation_skipped_origins": [],
+  "tuning": [
+    {
+      "candidate": 1,
+      "parameters": {
+        "n_estimators": 160,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 0.6238671186017908,
+      "RMSE": 0.9849348154480693,
+      "origins": 30,
+      "forecast_hours": 720
+    },
+    {
+      "candidate": 0,
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 0.625152823311833,
+      "RMSE": 0.9832234132359388,
+      "origins": 30,
+      "forecast_hours": 720
+    },
+    {
+      "candidate": 2,
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 0.6447084492634328,
+      "RMSE": 1.0121890258181583,
+      "origins": 30,
+      "forecast_hours": 720
+    }
+  ],
+  "timezone": "America/Denver",
+  "random_seed": 42,
+  "versions": {
+    "python": "3.13.9",
+    "sklearn": "1.7.2"
+  },
+  "processed_hourly_sha256": "00dd2012f7ad1833648810b90054379c5b8593dd8c05d8fa582bc72c927fe10e",
+  "configuration": {
+    "source": "C:\\Users\\seema\\OneDrive\\Desktop\\EVChargingForecasting\\data\\raw\\boulder_sessions.json",
+    "dataset_type": "boulder",
+    "timezone": "America/Denver",
+    "site_id": "boulder-carpenter-park",
+    "site_name": "Boulder \u2014 Scott Carpenter Park",
+    "boulder_address": "1505 30th St",
+    "period_start": "2022-12-01",
+    "period_end_exclusive": "2023-12-01",
+    "site_selection": "Highest arrival count among addresses in Dec 2022-Sep 2023 only; no held-out October/November scores used.",
+    "silence_unknown_hours": 168,
+    "validation_days": 30,
+    "test_days": 30,
+    "minimum_training_days": 180,
+    "random_seed": 42,
+    "trees": 120,
+    "min_samples_leaf": [
+      2,
+      5,
+      10
+    ],
+    "known_missing_intervals": [],
+    "technology": "Embedded IOT",
+    "subdomain": "Charging Infrastructure",
+    "official_stack": [
+      "REST API",
+      "Python",
+      "XGBoost",
+      "Grafana"
+    ],
+    "primary_model": "xgboost",
+    "include_random_forest": true,
+    "rf_benchmark_leaf": 10,
+    "xgboost_grid": [
+      {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      {
+        "n_estimators": 160,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      }
+    ]
+  },
+  "data_sha256": "9e51a08da5d0cb9f59d66bcfd84574bac3b109ee7c0e8fe530b70ef305aa9e8f",
+  "notes": [
+    "XGBoost, RF benchmark and hour-of-week means remain frozen during each evaluation period.",
+    "Observed arrivals before each later origin may be used as lag inputs, never observations at or after that origin.",
+    "Origins are 24 elapsed hours apart, starting at local midnight of each split.",
+    "Fractional nonnegative predictions are expected counts; metrics use unrounded values.",
+    "No calibrated prediction intervals are claimed."
+  ],
+  "model_version": "xgb-60ada047b5cc101acaac",
+  "test_origins": 30,
+  "test_skipped_origins": [],
+  "test_local_dates": 30,
+  "unique_test_hours": 720,
+  "test_metrics": [
+    {
+      "model": "xgboost",
+      "MAE": 0.5204734938160982,
+      "RMSE": 0.8825335798456136,
+      "origins": 30,
+      "forecast_hours": 720
+    },
+    {
+      "model": "random_forest",
+      "MAE": 0.5452035047147532,
+      "RMSE": 0.9050244283500496,
+      "origins": 30,
+      "forecast_hours": 720
+    },
+    {
+      "model": "same_hour_last_week",
+      "MAE": 0.5832175925925925,
+      "RMSE": 1.2359433406746545,
+      "origins": 30,
+      "forecast_hours": 720
+    },
+    {
+      "model": "hour_of_week_average",
+      "MAE": 0.7778147163120568,
+      "RMSE": 1.087103608230367,
+      "origins": 30,
+      "forecast_hours": 720
+    }
+  ],
+  "demo_origin": "2023-10-31T06:00:00+00:00",
+  "demo_last_observation": "2023-10-31T05:00:00+00:00",
+  "test_best_model_descriptive_only": "xgboost"
+}

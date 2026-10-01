@@ -10,10 +10,9 @@ import streamlit as st
 from evforecast.config import ROOT
 from evforecast.replay import LABEL, ReplayFeed, arrival_events
 
-st.set_page_config(page_title="EV Charging Demand Forecasting", page_icon="âš¡", layout="wide")
-st.title("EV Charging Forecasting | Legacy interface")
-st.info("Grafana is the primary dashboard. This retained interface is optional.")
-st.caption("College prototype â€¢ site-wide session arrivals â€¢ local software simulation")
+st.set_page_config(page_title="EV Charging Demand Forecasting", page_icon="⚡", layout="wide")
+st.title("⚡ EV Charging Demand Forecasting | Interactive Intelligence")
+st.caption("IoT-Based Site-Wide Session Arrival Forecasting • XGBoost • 24-Hour Horizon")
 required = ["reports/data_quality.json", "reports/evaluation.json", "data/hourly.csv",
             "data/sessions.csv", "artifacts/demo_forecast.csv", "reports/test_metrics.csv",
             "reports/test_predictions.csv", "reports/validation_metrics.csv", "reports/errors_by_hour.csv"]
@@ -33,7 +32,7 @@ sessions = pd.read_csv(ROOT / "data/sessions.csv", dtype={"siteID": str, "statio
 demo = pd.read_csv(ROOT / "artifacts/demo_forecast.csv")
 demo["timestamp"] = pd.to_datetime(demo.timestamp, utc=True)
 origin = pd.Timestamp(evaluation["demo_origin"])
-st.warning("Historical Boulder demonstration â€” not a validated forecast for today. Demand means session starts/hour, not electrical load.")
+st.warning("Historical Boulder demonstration — not a validated forecast for today. Demand means session starts/hour, not electrical load.")
 st.caption(f"Site: {evaluation['configuration']['site_name']} | Timezone: {tz} | Connections: {quality['first_connection_local']} to {quality['last_connection_local']}")
 st.caption(f"Demo forecast origin: {origin.tz_convert(tz).isoformat()} | Last observed hour starts: "
            f"{pd.Timestamp(evaluation['demo_last_observation']).tz_convert(tz).isoformat()} "
@@ -52,7 +51,7 @@ with overview:
              f"{quality['excluded_boundary_arrivals']} boundary-day arrivals excluded.")
     st.write("Source snapshot completeness does not establish feed uptime. A gap without events does not prove the feed was working; even populated hours can be undercounted.")
     for warning in quality["warnings"]:
-        st.caption("â€¢ " + warning)
+        st.caption("• " + warning)
     st.dataframe(pd.DataFrame({
         "Check": ["Duplicate session IDs", "Missing doneChargingTime", "doneChargingTime outside session",
                   "Unusable arrivals", "Known missing hours"],
@@ -100,7 +99,7 @@ with prediction_tab:
 with evaluation_tab:
     metrics = pd.read_csv(ROOT / "reports/test_metrics.csv")
     st.subheader("Chronological held-out test")
-    st.write(f"{evaluation['test_origins']} complete 24-hour origins â€¢ {evaluation['test_local_dates']} local dates â€¢ "
+    st.write(f"{evaluation['test_origins']} complete 24-hour origins • {evaluation['test_local_dates']} local dates • "
              f"{evaluation['unique_test_hours']} unique target hours. All models use identical timestamps.")
     st.caption(f"Test interval (UTC): {evaluation['test_start']} to {evaluation['test_end_exclusive']} (exclusive).")
     st.dataframe(metrics, hide_index=True)

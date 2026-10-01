@@ -1,0 +1,147 @@
+{
+  "project_id": "P_231",
+  "primary_model": "xgboost",
+  "evaluated_models": [
+    "same_hour_last_week",
+    "hour_of_week_average",
+    "xgboost",
+    "random_forest"
+  ],
+  "title": "IoT-Based EV Charging Demand Forecasting",
+  "target": "Site-wide session arrivals, sessions/hour",
+  "strategy": "Recursive next 24 elapsed hours; unavailable lags use predictions.",
+  "selected_model": "hour_of_week_average",
+  "selection": "Lowest validation MAE; RMSE then model name break ties.",
+  "validation_start": "2018-06-08T07:00:00+00:00",
+  "test_start": "2018-06-22T07:00:00+00:00",
+  "test_end_exclusive": "2018-07-06T07:00:00+00:00",
+  "training_start": "2018-04-26T07:00:00+00:00",
+  "validation_origins": 14,
+  "validation_skipped_origins": [],
+  "tuning": [
+    {
+      "candidate": 2,
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 1.0773877534194893,
+      "RMSE": 1.5967353982440369,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "candidate": 1,
+      "parameters": {
+        "n_estimators": 160,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 1.0870696110138116,
+      "RMSE": 1.613561723138199,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "candidate": 0,
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 1.1078153293457857,
+      "RMSE": 1.611763052905599,
+      "origins": 14,
+      "forecast_hours": 336
+    }
+  ],
+  "timezone": "America/Los_Angeles",
+  "random_seed": 42,
+  "versions": {
+    "python": "3.13.9",
+    "sklearn": "1.7.2"
+  },
+  "processed_hourly_sha256": "b664e4e5a33f26c8dbc33d51e302ed15ff32019adb2ddf2b5d166439af068add",
+  "configuration": {
+    "source": "C:/Users/seema/Downloads/acndata_sessions.json",
+    "timezone": "America/Los_Angeles",
+    "site_id": "0002",
+    "site_name": "Caltech",
+    "validation_days": 14,
+    "test_days": 14,
+    "minimum_training_days": 21,
+    "random_seed": 42,
+    "trees": 120,
+    "min_samples_leaf": [
+      2,
+      5,
+      10
+    ],
+    "known_missing_intervals": [],
+    "project_id": "P_231",
+    "primary_model": "xgboost",
+    "include_random_forest": true,
+    "rf_benchmark_leaf": 10,
+    "xgboost_grid": [
+      {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      {
+        "n_estimators": 160,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      }
+    ]
+  },
+  "data_sha256": "0aaaa374dc65ee88434faaecf90098e0a8ac4634a4ca462f579f42ee35868bf3",
+  "notes": [
+    "XGBoost, RF benchmark and hour-of-week means remain frozen during each evaluation period.",
+    "Observed arrivals before each later origin may be used as lag inputs, never observations at or after that origin.",
+    "Origins are 24 elapsed hours apart, starting at local midnight of each split.",
+    "Fractional nonnegative predictions are expected counts; metrics use unrounded values.",
+    "No calibrated prediction intervals are claimed."
+  ],
+  "model_version": "xgb-80b0cf572c683d93f149",
+  "model_sha256": "95638c0eb048292ba6ec025c9d83a9998aed09e625d949f9676c10f4e3b077e0",
+  "feature_schema": [
+    "local_hour",
+    "local_weekday",
+    "weekend",
+    "hour_sin",
+    "hour_cos",
+    "lag_1",
+    "lag_24",
+    "lag_168",
+    "mean_24",
+    "std_24",
+    "mean_168",
+    "std_168"
+  ],
+  "fit_end": "2018-06-22 06:00:00+00:00",
+  "training_cutoff_exclusive": "2018-06-22T07:00:00+00:00",
+  "dataset_id": "b664e4e5a33f26c8dbc33d51e302ed15ff32019adb2ddf2b5d166439af068add",
+  "units": "sessions/hour"
+}

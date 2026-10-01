@@ -1,9 +1,12 @@
 .venv/
 __pycache__/
 .pytest_cache/
-data/
-artifacts/
 runtime/
 *.log
 
+# Exclude large raw download snapshot (76 MB)
+data/raw/
+data/recovered_sessions.json
+
+# Local credentials
 .env

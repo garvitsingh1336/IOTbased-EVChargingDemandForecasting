@@ -1,0 +1,165 @@
+{
+  "project_id": "P_231",
+  "primary_model": "xgboost",
+  "evaluated_models": [
+    "same_hour_last_week",
+    "hour_of_week_average",
+    "xgboost",
+    "random_forest"
+  ],
+  "title": "IoT-Based EV Charging Demand Forecasting",
+  "target": "Site-wide session arrivals, sessions/hour",
+  "strategy": "Recursive next 24 elapsed hours; unavailable lags use predictions.",
+  "selected_model": "hour_of_week_average",
+  "selection": "Lowest validation MAE; RMSE then model name break ties.",
+  "validation_start": "2018-06-08T07:00:00+00:00",
+  "test_start": "2018-06-22T07:00:00+00:00",
+  "test_end_exclusive": "2018-07-06T07:00:00+00:00",
+  "training_start": "2018-04-26T07:00:00+00:00",
+  "validation_origins": 14,
+  "validation_skipped_origins": [],
+  "tuning": [
+    {
+      "candidate": 2,
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 1.0773877534194893,
+      "RMSE": 1.5967353982440369,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "candidate": 1,
+      "parameters": {
+        "n_estimators": 160,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 1.0870696110138116,
+      "RMSE": 1.613561723138199,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "candidate": 0,
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      "model": "xgboost",
+      "MAE": 1.1078153293457857,
+      "RMSE": 1.611763052905599,
+      "origins": 14,
+      "forecast_hours": 336
+    }
+  ],
+  "timezone": "America/Los_Angeles",
+  "random_seed": 42,
+  "versions": {
+    "python": "3.13.9",
+    "sklearn": "1.7.2"
+  },
+  "processed_hourly_sha256": "b664e4e5a33f26c8dbc33d51e302ed15ff32019adb2ddf2b5d166439af068add",
+  "configuration": {
+    "source": "C:/Users/seema/Downloads/acndata_sessions.json",
+    "timezone": "America/Los_Angeles",
+    "site_id": "0002",
+    "site_name": "Caltech",
+    "validation_days": 14,
+    "test_days": 14,
+    "minimum_training_days": 21,
+    "random_seed": 42,
+    "trees": 120,
+    "min_samples_leaf": [
+      2,
+      5,
+      10
+    ],
+    "known_missing_intervals": [],
+    "project_id": "P_231",
+    "primary_model": "xgboost",
+    "include_random_forest": true,
+    "rf_benchmark_leaf": 10,
+    "xgboost_grid": [
+      {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      {
+        "n_estimators": 160,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      },
+      {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "min_child_weight": 5,
+        "reg_lambda": 5
+      }
+    ]
+  },
+  "data_sha256": "0aaaa374dc65ee88434faaecf90098e0a8ac4634a4ca462f579f42ee35868bf3",
+  "notes": [
+    "XGBoost, RF benchmark and hour-of-week means remain frozen during each evaluation period.",
+    "Observed arrivals before each later origin may be used as lag inputs, never observations at or after that origin.",
+    "Origins are 24 elapsed hours apart, starting at local midnight of each split.",
+    "Fractional nonnegative predictions are expected counts; metrics use unrounded values.",
+    "No calibrated prediction intervals are claimed."
+  ],
+  "model_version": "xgb-80b0cf572c683d93f149",
+  "test_origins": 14,
+  "test_skipped_origins": [],
+  "test_local_dates": 14,
+  "unique_test_hours": 336,
+  "test_metrics": [
+    {
+      "model": "random_forest",
+      "MAE": 1.3075777314222363,
+      "RMSE": 1.9563082471035995,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "model": "hour_of_week_average",
+      "MAE": 1.3162202380952381,
+      "RMSE": 2.034688363118249,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "model": "xgboost",
+      "MAE": 1.3500335048884153,
+      "RMSE": 2.014303777300558,
+      "origins": 14,
+      "forecast_hours": 336
+    },
+    {
+      "model": "same_hour_last_week",
+      "MAE": 1.5238095238095237,
+      "RMSE": 2.370453040886408,
+      "origins": 14,
+      "forecast_hours": 336
+    }
+  ],
+  "demo_origin": "2018-06-22T07:00:00+00:00",
+  "demo_last_observation": "2018-06-22T06:00:00+00:00",
+  "test_best_model_descriptive_only": "random_forest"
+}
